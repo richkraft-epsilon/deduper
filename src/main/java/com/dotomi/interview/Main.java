@@ -30,7 +30,14 @@ public class Main {
 				new Event("abc123", "user1", "click", startTime) // duplicate
 		);
 
-		// TODO: Loop through each event to call processEvent method, and print processed and duplicate events
+		for (Event event : events) {
+			final boolean result = processor.processEvent(event);
+			if (result) {
+				System.out.println("Proccessed event " + event);
+			} else {
+				System.out.println("Duplicate event " + event);
+			}
+		}
 	}
 
 	/**
@@ -57,15 +64,28 @@ public class Main {
 		}
 	}
 
+	public static class DeDuper {
+		public boolean isDuplicate(Event event) {
+			// TODO: Complete this method
+			return false;
+		}
+	}
+
 	/**
 	 * This class is final and cannot be modified.
 	 */
 	public static class BusinessLogicProcessor {
 
+		private final DeDuper deduper = new DeDuper();
+
         /**
 		 * returns true if the event is successfully processed, false if the event is not successfully processed and should be seen again.
 		 */
 		public boolean processEvent(Event e) {
+			if (deduper.isDuplicate(e)) {
+				return false;
+			}
+			
 			/*
 			 * Some abstract black box processing of the event
 			 */
